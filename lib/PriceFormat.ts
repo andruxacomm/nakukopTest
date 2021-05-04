@@ -8,5 +8,5 @@ export const priceRuFormat = ({ price, rate }: IPriceRuFormat): string => {
 };
 
 export const priceEnFormat = (price: number): string => {
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'EUR' }).format(price);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol' }).format(price);
 };
