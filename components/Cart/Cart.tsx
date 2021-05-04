@@ -23,7 +23,6 @@ export const Cart: FC = observer(() => {
     const { cartStore, configStore } = useStore();
     const { totalPrice } = cartStore;
     const totalValue = priceRuFormat({ price: totalPrice, rate: configStore.rate });
-
     const onDelete = useCallback((id: number) => cartStore.removeProductFromCart(id), [cartStore.removeProductFromCart]);
     const onChange = useCallback(
         (product: TCartProduct, cartQuantity: number) => {
