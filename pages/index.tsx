@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
 const Home: NextPage = observer(() => {
-    const { productsStore, configStore } = useStore();
+    const { productsStore, configStore, cartStore } = useStore();
     useEffect(() => {
         productsStore.startFetchingWithInterval();
         configStore.updateRate();
@@ -20,6 +20,8 @@ const Home: NextPage = observer(() => {
         <>
             {productsStore.isFetching + ''} <br /> {JSON.stringify(productsStore.goods)} <br />
             {JSON.stringify(configStore.rate)}
+            <br />
+            {JSON.stringify(cartStore.products)}
         </>
     );
 });

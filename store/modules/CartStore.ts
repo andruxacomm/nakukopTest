@@ -30,10 +30,19 @@ export const CartStore = types
     .actions(self => {
         const initCart = (): void => {
             const cart = localStorage.getItem('cart') || '[]';
+
+            //validate structure
+            const products = JSON.parse(cart).filter(v => v.hasOwnProperty('id')
+                && v.hasOwnProperty('price')
+                && v.hasOwnProperty('quantity')
+                && v.hasOwnProperty('cartQuantity')
+                && v.hasOwnProperty('name'));
+
             applySnapshot(self, {
                 ...self,
-                products: JSON.parse(cart),
+                products,
             });
+            localStorage.setItem('cart', JSON.stringify(products));
         };
         const addProductToCart = (product: TCartProduct): void => {
             const products = [...self.products];
