@@ -10,10 +10,31 @@
   "dependencies": {
     "date-fns": "^2.11.1",
     "gray-matter": "^4.0.2",
+    "mobx": "^6.3.0",
+    "mobx-react-lite": "^3.2.0",
+    "mobx-state-tree": "^5.0.1",
     "next": "^10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "remark": "^12.0.0",
     "remark-html": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "prettier": "^2.0.5",
+    "typescript": "^4.2.4"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "jsxBracketSameLine": true,
+    "vueIndentScriptAndStyle": true,
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "printWidth": 180,
+    "arrowParens": "avoid"
   }
 }
