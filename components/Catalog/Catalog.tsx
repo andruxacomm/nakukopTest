@@ -23,7 +23,7 @@ export const Catalog: FC = observer(() => {
                                   {index === group.goods.length - 1 ? <Divider marginBottom={3} /> : null}
                               </Box>
                           ))
-                        : 'List is empty'}
+                        : null}
                 </Box>
             ))}
         </SimpleGrid>

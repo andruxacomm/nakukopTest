@@ -17,7 +17,7 @@ export const CatalogProduct: FC<ICatalogProduct> = observer(({ product }) => {
 
     return (
         <Box padding="2" maxW="3xl" backgroundColor={isUp ? 'red' : isDown ? 'green' : 'gray.100'} onClick={pushProduct} cursor="pointer">
-            <Heading as="h3" size="3sm" marginBottom={2}>
+            <Heading as="h3" size="3sm">
                 {name} - ({quantity}) - {priceValue}
             </Heading>
         </Box>
