@@ -2,7 +2,7 @@ import { applySnapshot, Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { BaseStore } from './BaseStore';
 import { TTimer } from './ProductsStore';
 
-const rateTimeOut = 1000 * 15;
+const rateTimeOut = 1000 * 20;
 const delta = [50, 80];
 
 export const ConfigStore = types

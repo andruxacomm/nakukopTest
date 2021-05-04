@@ -17,7 +17,7 @@ export type TGoods = {
 };
 export const TTimer = generateMobxType<NodeJS.Timeout>({ name: 'TTimer' });
 export const TGoodsList = generateMobxType<TGoodsGroupedList>({ name: 'TGoodsList' });
-const fetchTimeOut = 1000 * 20;
+const fetchTimeOut = 1000 * 15;
 
 export const ProductsStore = types
     .compose(
