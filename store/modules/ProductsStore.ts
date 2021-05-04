@@ -1,6 +1,7 @@
 import { applySnapshot, Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { BaseStore } from './BaseStore';
 import { getNames, getProducts } from '../../api';
+import generateMobxType from '../../lib/generateMobxType';
 
 export type TGoodsGroupedList = {
     id: number;
@@ -13,38 +14,8 @@ export type TGoods = {
     price: number;
     quantity: number;
 };
-export const TTimer = types.custom<NodeJS.Timeout, NodeJS.Timeout>({
-    name: 'TTimer',
-    fromSnapshot(value) {
-        return value;
-    },
-    toSnapshot(value) {
-        return value;
-    },
-    isTargetType(): boolean {
-        return true;
-    },
-    getValidationMessage(value): string {
-        if (true) return ''; // OK
-        return `'${value}' doesn't look like a valid SettingsStructure`;
-    },
-});
-export const TGoodsList = types.custom<TGoodsGroupedList, TGoodsGroupedList>({
-    name: 'TGoodsList',
-    fromSnapshot(value) {
-        return value;
-    },
-    toSnapshot(value) {
-        return value;
-    },
-    isTargetType(): boolean {
-        return true;
-    },
-    getValidationMessage(value): string {
-        if (true) return ''; // OK
-        return `'${value}' doesn't look like a valid SettingsStructure`;
-    },
-});
+export const TTimer = generateMobxType<NodeJS.Timeout>('TTimer')
+export const TGoodsList = generateMobxType<TGoodsGroupedList>('TGoodsList');
 const fetchTimeOut = 1000 * 5;
 
 export const ProductsStore = types
