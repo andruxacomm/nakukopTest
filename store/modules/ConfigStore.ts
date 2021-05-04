@@ -11,6 +11,7 @@ export const ConfigStore = types
         types.model({
             rate: types.number,
             timer: types.optional(TTimer, null),
+            isRateGrow: types.optional(types.boolean, null),
         })
     )
     .actions(self => {

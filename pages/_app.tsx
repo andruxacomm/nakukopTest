@@ -1,5 +1,5 @@
 import { StoreProvider } from '../store';
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 
 const App = ({ Component, pageProps }) => (
     <StoreProvider initialState={pageProps.store}>

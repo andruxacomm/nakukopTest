@@ -1,24 +1,11 @@
 import { applySnapshot, Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { BaseStore } from './BaseStore';
 import { TGoods } from './ProductsStore';
+import generateMobxType from '../../lib/generateMobxType';
+
 export type TCartProduct = TGoods & { cartQuantity: number };
 
-const TCartProducts = types.custom<TCartProduct[], TCartProduct[]>({
-    name: 'TCartProducts',
-    fromSnapshot(value) {
-        return value;
-    },
-    toSnapshot(value) {
-        return value;
-    },
-    isTargetType(): boolean {
-        return true;
-    },
-    getValidationMessage(value): string {
-        if (true) return ''; // OK
-        return `'${value}' doesn't look like a valid SettingsStructure`;
-    },
-});
+const TCartProducts = generateMobxType<TCartProduct[]>('TCartProducts');
 
 export const CartStore = types
     .compose(
@@ -31,7 +18,7 @@ export const CartStore = types
         const initCart = (): void => {
             const cart = localStorage.getItem('cart') || '[]';
 
-            //validate structure
+            //normalise structure
             const products = JSON.parse(cart).filter(v => v.hasOwnProperty('id')
                 && v.hasOwnProperty('price')
                 && v.hasOwnProperty('quantity')
