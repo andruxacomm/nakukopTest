@@ -1,14 +1,36 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store';
-import { Heading, Table, Tbody, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
-import { CartProduct } from './CartProduct';
+import { TCartProduct, useStore } from '../../store';
+import {
+    Button,
+    Heading,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    Table,
+    Tbody,
+    Td,
+    Tfoot,
+    Th,
+    Thead,
+    Tr,
+} from '@chakra-ui/react';
 import { priceRuFormat } from '../../lib/PriceFormat';
 
 export const Cart: FC = observer(() => {
     const { cartStore, configStore } = useStore();
     const { totalPrice } = cartStore;
     const totalValue = priceRuFormat({ price: totalPrice, rate: configStore.rate });
+
+    const onDelete = useCallback((id: number) => cartStore.removeProductFromCart(id), [cartStore.removeProductFromCart]);
+    const onChange = useCallback(
+        (product: TCartProduct, cartQuantity: number) => {
+            cartStore.updateCartProduct({ ...product, cartQuantity });
+        },
+        [cartStore.updateCartProduct]
+    );
 
     return (
         <>
@@ -27,7 +49,21 @@ export const Cart: FC = observer(() => {
                 <Tbody>
                     {cartStore.products.map(product => (
                         <Tr key={product.id}>
-                            <CartProduct product={product} />
+                            <Td>{product.name}</Td>
+                            <Td>
+                                <NumberInput onChange={v => onChange(product, parseInt(v))} value={product.cartQuantity} max={product.quantity} min={1}>
+                                    <NumberInputField />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                                {product.quantity === product.cartQuantity && 'Предложение ограничено'}
+                            </Td>
+                            <Td isNumeric>{priceRuFormat({ price: product.price * product.cartQuantity, rate: configStore.rate })}</Td>
+                            <Td>
+                                <Button onClick={() => onDelete(product.id)}>Delete</Button>
+                            </Td>
                         </Tr>
                     ))}
                 </Tbody>
