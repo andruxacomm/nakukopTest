@@ -9,11 +9,9 @@ export const BaseStore = types
         const setFetching = (value: boolean): void => {
             self.isFetching = value;
         };
-
         const setError = (e: Error): void => {
             self.error = e.message;
         };
-
         const clearError = (): void => {
             self.error = null;
         };
@@ -23,9 +21,4 @@ export const BaseStore = types
             clearError,
             setError,
         };
-    })
-    .views(self => ({
-        get isSuccess(): boolean {
-            return !self.isFetching && !self.error;
-        },
-    }));
+    });

@@ -71,7 +71,7 @@ export const CartStore = types
                 .map(v => {
                     const item = { ...v };
                     if (item.id === product.id) {
-                        item.cartQuantity = product.quantity >= product.cartQuantity ? product.cartQuantity : item.cartQuantity;
+                        item.cartQuantity = product.quantity >= product.cartQuantity ? product.cartQuantity : product.quantity;
                     }
                     return item;
                 })

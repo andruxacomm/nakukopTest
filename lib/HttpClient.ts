@@ -17,7 +17,6 @@ class HttpClient {
             }
         });
     }
-    //you can realise another httpClient methods here
 }
 
 export default HttpClient.createInstance();

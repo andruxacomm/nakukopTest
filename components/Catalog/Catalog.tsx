@@ -16,7 +16,14 @@ export const Catalog: FC = observer(() => {
                         {group.name}
                     </Heading>
                     <Divider marginBottom={3} />
-                    {group.goods.length > 0 ? group.goods.map(product => <CatalogProduct product={product} key={product.id} />) : 'List is empty'}
+                    {group.goods.length > 0
+                        ? group.goods.map((product, index) => (
+                              <Box key={product.id}>
+                                  <CatalogProduct product={product} />
+                                  {index === group.goods.length - 1 ? <Divider marginBottom={3} /> : null}
+                              </Box>
+                          ))
+                        : 'List is empty'}
                 </Box>
             ))}
         </SimpleGrid>

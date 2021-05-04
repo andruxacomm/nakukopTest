@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
-import { Table, Tbody, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { Heading, Table, Tbody, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
 import { CartProduct } from './CartProduct';
 import { priceRuFormat } from '../../lib/PriceFormat';
 
@@ -11,28 +11,35 @@ export const Cart: FC = observer(() => {
     const totalValue = priceRuFormat({ price: totalPrice, rate: configStore.rate });
 
     return (
-        <Table variant="simple">
-            <Thead>
-                <Tr>
-                    <Th>Name</Th>
-                    <Th>Quantity</Th>
-                    <Th isNumeric>price</Th>
-                    <Th />
-                </Tr>
-            </Thead>
-            <Tbody>
-                {cartStore.products.map(product => (
-                    <CartProduct product={product} key={product.id + '_' + product.cartQuantity} />
-                ))}
-            </Tbody>
-            <Tfoot>
-                <Tr>
-                    <Th />
-                    <Th />
-                    <Th isNumeric>{totalValue}</Th>
-                    <Th isNumeric />
-                </Tr>
-            </Tfoot>
-        </Table>
+        <>
+            <Heading as="h2" size="3xl" padding="20px 0">
+                Корзина
+            </Heading>
+            <Table variant="simple">
+                <Thead>
+                    <Tr>
+                        <Th>Наименование товара</Th>
+                        <Th>Кол-во</Th>
+                        <Th isNumeric>Цена</Th>
+                        <Th />
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {cartStore.products.map(product => (
+                        <Tr key={product.id}>
+                            <CartProduct product={product} />
+                        </Tr>
+                    ))}
+                </Tbody>
+                <Tfoot>
+                    <Tr>
+                        <Th />
+                        <Th />
+                        <Th isNumeric>Итого - {totalValue}</Th>
+                        <Th isNumeric />
+                    </Tr>
+                </Tfoot>
+            </Table>
+        </>
     );
 });
