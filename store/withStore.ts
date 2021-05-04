@@ -10,11 +10,12 @@ type Fn = (store: TRootStoreInstance, context: GetServerSidePropsContext) => Pro
 export const withStore = (fn?: Fn): GetServerSideProps<Props> => async context => {
     const store = initStore();
     await Promise.all([
+        //put here custom server store actions
         fn?.(store, context),
     ]);
     return {
         props: {
-            store: getSnapshot(store)
+            store: getSnapshot(store),
         },
     };
 };

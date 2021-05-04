@@ -15,14 +15,6 @@ export type TProduct = {
     price: number;
     quantity: number;
 };
-export type TProductsStructure = {
-    error: string;
-    id: number;
-    success: boolean;
-    value: {
-        goods: TProduct[];
-    };
-};
 export type TProductsMockStructure = {
     Error: string;
     Id: number;
@@ -32,23 +24,15 @@ export type TProductsMockStructure = {
     };
 };
 
-export const getProducts = async (): Promise<TProductsStructure> => {
-    const response = (await HttpClient.get('products')) as Partial<TProductsMockStructure>;
+export const getProducts = async (): Promise<TProduct[]> => {
+    const response = (await HttpClient.get('products')) as TProductsMockStructure;
     const id: number | undefined = response.Id;
-    if (typeof id === 'undefined') throw new Error('required property "Id" doesnt exist at response');
-    const goods = response?.Value?.Goods || [];
+    if (typeof id === 'undefined') throw new Error('required property "Id" doesnt exist at "response"');
 
-    return {
-        error: response?.Error || '',
-        id: id,
-        success: response?.Success ?? false,
-        value: {
-            goods: goods.map(v => ({
-                id: v.T,
-                groupId: v.G,
-                price: v.C,
-                quantity: v.P,
-            })),
-        },
-    };
+    return response.Value.Goods.map(v => ({
+        id: v.T,
+        groupId: v.G,
+        price: v.C,
+        quantity: v.P,
+    }));
 };

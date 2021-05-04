@@ -1,47 +1,46 @@
 import { applySnapshot, Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { BaseStore } from './BaseStore';
 import { getNames, getProducts } from '../../api';
-import generateMobxType from '../../lib/generateMobxType';
+import { generateMobxType } from '../../lib/generateMobxType';
 
-export type TGoodsGroupedList = {
+export type TGoodsGroup = {
     id: number;
     name: string;
     goods: TGoods[];
-}[];
+};
+export type TGoodsGroupedList = TGoodsGroup[];
 export type TGoods = {
     id: number;
     name: string;
     price: number;
     quantity: number;
 };
-export const TTimer = generateMobxType<NodeJS.Timeout>('TTimer')
-export const TGoodsList = generateMobxType<TGoodsGroupedList>('TGoodsList');
-const fetchTimeOut = 1000 * 5;
+export const TTimer = generateMobxType<NodeJS.Timeout>({ name: 'TTimer' });
+export const TGoodsList = generateMobxType<TGoodsGroupedList>({ name: 'TGoodsList' });
+const fetchTimeOut = 1000 * 20;
 
 export const ProductsStore = types
     .compose(
         BaseStore,
         types.model({
-            goods: types.optional(TGoodsList, []),
+            groupedGoods: types.optional(TGoodsList, []),
             timer: types.optional(TTimer, null),
         })
     )
     .actions(self => {
         const { setFetching, setError } = self;
-
         const fetch = async (): Promise<void> => {
             setFetching(true);
             try {
                 const [products, names] = await Promise.all([getProducts(), getNames()]);
-                const productGoods = products.value.goods;
                 applySnapshot(self, {
                     ...self,
-                    goods: names.map(group => ({
+                    groupedGoods: names.map(group => ({
                         id: group.id,
                         name: group.name,
                         goods: group.products
                             .map(product => {
-                                const clone = productGoods.find(item => item.id === product.id && item.groupId === group.id);
+                                const clone = products.find(item => item.id === product.id && item.groupId === group.id);
                                 return {
                                     id: clone?.id ?? -1,
                                     name: product.name || '',

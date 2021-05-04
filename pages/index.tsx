@@ -2,12 +2,14 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useStore, withStore } from '../store';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
+import { Catalog } from '../components/Catalog';
+import { Cart } from '../components/Cart';
 
 const Home: NextPage = observer(() => {
-    const { productsStore, configStore, cartStore } = useStore();
+    const { productsStore, configStore } = useStore();
+
     useEffect(() => {
         productsStore.startFetchingWithInterval();
-        configStore.updateRate();
         configStore.startRateInterval();
 
         return () => {
@@ -18,10 +20,8 @@ const Home: NextPage = observer(() => {
 
     return (
         <>
-            {productsStore.isFetching + ''} <br /> {JSON.stringify(productsStore.goods)} <br />
-            {JSON.stringify(configStore.rate)}
-            <br />
-            {JSON.stringify(cartStore.products)}
+            <Catalog />
+            <Cart />
         </>
     );
 });

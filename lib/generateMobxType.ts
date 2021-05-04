@@ -1,20 +1,26 @@
 import { types } from 'mobx-state-tree';
 import { IType } from 'mobx-state-tree/dist/internal';
 
-export default <S, T=S>(name: string):IType<S, S, S> => {
+export interface IGenerateMobxType<S> {
+    name: string;
+    fromSnapshot?: (value: S) => S;
+    toSnapshot?: (value: S) => S;
+    isTargetType?: (value: unknown) => boolean;
+    getValidationMessage?: () => string;
+}
+
+export const generateMobxType = <S, T = S>({
+    name,
+    fromSnapshot = value => value,
+    toSnapshot = value => value,
+    isTargetType = () => true,
+    getValidationMessage = () => '',
+}: IGenerateMobxType<S>): IType<S, S, S> => {
     return types.custom<S, S>({
         name,
-        fromSnapshot(value) {
-            return value;
-        },
-        toSnapshot(value) {
-            return value;
-        },
-        isTargetType(): boolean {
-            return true;
-        },
-        getValidationMessage(value): string {
-            return `'${value}' doesn't look like a valid ${name}`;
-        },
-    })
-}
+        fromSnapshot,
+        toSnapshot,
+        isTargetType,
+        getValidationMessage,
+    });
+};
