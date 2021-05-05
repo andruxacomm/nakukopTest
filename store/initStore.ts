@@ -13,7 +13,6 @@ export function initStore(snapshot?: TRootStoreInstance) {
     if (typeof window === 'undefined') {
         return _store;
     } else {
-        _store.cartStore.initCart();
     }
 
     if (!index) {

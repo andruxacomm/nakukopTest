@@ -1,12 +1,16 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store';
+import { TGoods, useStore } from '../../store';
 import { Box, Divider, Heading, SimpleGrid } from '@chakra-ui/react';
-import { CatalogProduct } from './CatalogProduct';
+import { priceEnFormat } from '../../lib/PriceFormat';
 
 export const Catalog: FC = observer(() => {
-    const { productsStore } = useStore();
+    const { productsStore, configStore, cartStore } = useStore();
     const { groupedGoods } = productsStore;
+    const { isUp, isDown } = configStore;
+    const { addProductToCart } = cartStore;
+    const pushProduct = useCallback((product: TGoods) => addProductToCart({ ...product, cartQuantity: 1 }), [addProductToCart]);
+
     return (
         <SimpleGrid columns={2} spacing={5}>
             {groupedGoods.map(group => {
@@ -20,7 +24,16 @@ export const Catalog: FC = observer(() => {
                         {goods.length > 0
                             ? goods.map((product, index) => (
                                   <Box key={product.id}>
-                                      <CatalogProduct product={product} />
+                                      <Box
+                                          padding="2"
+                                          maxW="3xl"
+                                          backgroundColor={isUp ? 'red' : isDown ? 'green' : 'gray.100'}
+                                          onClick={() => pushProduct(product)}
+                                          cursor="pointer">
+                                          <Heading as="h3" size="3sm" marginBottom={2}>
+                                              {name} - ({product.quantity}) - {priceEnFormat(product.price)}
+                                          </Heading>
+                                      </Box>
                                       {index === goods.length - 1 ? <Divider marginBottom={3} /> : null}
                                   </Box>
                               ))

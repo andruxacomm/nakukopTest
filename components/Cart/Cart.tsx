@@ -21,14 +21,14 @@ import { priceRuFormat } from '../../lib/PriceFormat';
 
 export const Cart: FC = observer(() => {
     const { cartStore, configStore } = useStore();
-    const { totalPrice } = cartStore;
+    const { totalPrice, updateCartProduct, removeProductFromCart } = cartStore;
     const totalValue = priceRuFormat({ price: totalPrice, rate: configStore.rate });
-    const onDelete = useCallback((id: number) => cartStore.removeProductFromCart(id), [cartStore.removeProductFromCart]);
+    const onDelete = useCallback((id: number) => removeProductFromCart(id), [removeProductFromCart]);
     const onChange = useCallback(
         (product: TCartProduct, cartQuantity: number) => {
-            cartStore.updateCartProduct({ ...product, cartQuantity });
+            updateCartProduct({ ...product, cartQuantity });
         },
-        [cartStore.updateCartProduct]
+        [updateCartProduct]
     );
 
     return (

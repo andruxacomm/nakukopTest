@@ -6,11 +6,12 @@ import { Catalog } from '../components/Catalog';
 import { Cart } from '../components/Cart';
 
 const Home: NextPage = observer(() => {
-    const { productsStore, configStore } = useStore();
+    const { productsStore, configStore, cartStore } = useStore();
 
     useEffect(() => {
         productsStore.startFetchingWithInterval();
         configStore.startRateInterval();
+        cartStore.initCart();
 
         return () => {
             productsStore.clearFetchingInterval();
