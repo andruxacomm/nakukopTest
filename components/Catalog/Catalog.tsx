@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { TGoods, useStore } from '../../store';
 import { Box, Divider, Heading, SimpleGrid } from '@chakra-ui/react';
@@ -9,7 +9,7 @@ export const Catalog: FC = observer(() => {
     const { groupedGoods } = productsStore;
     const { isUp, isDown } = configStore;
     const { addProductToCart } = cartStore;
-    const pushProduct = useCallback((product: TGoods) => addProductToCart({ ...product, cartQuantity: 1 }), [addProductToCart]);
+    const pushProduct = (product: TGoods): void => addProductToCart({ ...product, cartQuantity: 1 });
 
     return (
         <SimpleGrid columns={2} spacing={5}>

@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { TCartProduct, useStore } from '../../store';
 import {
@@ -23,13 +23,10 @@ export const Cart: FC = observer(() => {
     const { cartStore, configStore } = useStore();
     const { totalPrice, updateCartProduct, removeProductFromCart } = cartStore;
     const totalValue = priceRuFormat({ price: totalPrice, rate: configStore.rate });
-    const onDelete = useCallback((id: number) => removeProductFromCart(id), [removeProductFromCart]);
-    const onChange = useCallback(
-        (product: TCartProduct, cartQuantity: number) => {
-            updateCartProduct({ ...product, cartQuantity });
-        },
-        [updateCartProduct]
-    );
+    const onDelete = (id: number): void => removeProductFromCart(id);
+    const onChange = (product: TCartProduct, cartQuantity: number) => {
+        updateCartProduct({ ...product, cartQuantity });
+    };
 
     return (
         <>
