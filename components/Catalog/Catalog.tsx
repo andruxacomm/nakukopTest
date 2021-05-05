@@ -31,7 +31,7 @@ export const Catalog: FC = observer(() => {
                                           onClick={() => pushProduct(product)}
                                           cursor="pointer">
                                           <Heading as="h3" size="3sm" marginBottom={2}>
-                                              {name} - ({product.quantity}) - {priceEnFormat(product.price)}
+                                              {product.name} - ({product.quantity}) - {priceEnFormat(product.price)}
                                           </Heading>
                                       </Box>
                                       {index === goods.length - 1 ? <Divider marginBottom={3} /> : null}
