@@ -22,19 +22,17 @@ export const Catalog: FC = observer(() => {
                         </Heading>
                         <Divider marginBottom={3} />
                         {goods.length > 0
-                            ? goods.map((product, index) => (
-                                  <Box key={product.id}>
-                                      <Box
-                                          padding="2"
-                                          maxW="3xl"
-                                          backgroundColor={isUp ? 'red' : isDown ? 'green' : 'gray.100'}
-                                          onClick={() => pushProduct(product)}
-                                          cursor="pointer">
-                                          <Heading as="h3" size="3sm" marginBottom={2}>
-                                              {product.name} - ({product.quantity}) - {priceEnFormat(product.price)}
-                                          </Heading>
-                                      </Box>
-                                      {index === goods.length - 1 ? <Divider marginBottom={3} /> : null}
+                            ? goods.map(product => (
+                                  <Box
+                                      key={product.id}
+                                      padding="2"
+                                      maxW="3xl"
+                                      backgroundColor={isUp ? 'red' : isDown ? 'green' : 'gray.100'}
+                                      onClick={() => pushProduct(product)}
+                                      cursor="pointer">
+                                      <Heading as="h3" size="3sm" marginBottom={2}>
+                                          {product.name} - ({product.quantity}) - {priceEnFormat(product.price)}
+                                      </Heading>
                                   </Box>
                               ))
                             : null}
