@@ -9,7 +9,7 @@ export interface IGenerateMobxType<S> {
     getValidationMessage?: () => string;
 }
 
-export const generateMobxType = <S, T = S>({
+export const generateMobxType = <S>({
     name,
     fromSnapshot = value => value,
     toSnapshot = value => value,
