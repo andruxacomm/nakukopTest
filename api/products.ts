@@ -25,7 +25,7 @@ export type TProductsMockStructure = {
 };
 
 export const getProducts = async (): Promise<TProduct[]> => {
-    const response = (await HttpClient.get('products')) as TProductsMockStructure;
+    const response = await HttpClient.get<TProductsMockStructure>('products');
     const id: number | undefined = response.Id;
     if (typeof id === 'undefined') throw new Error('required property "Id" doesnt exist at "response"');
 

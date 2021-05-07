@@ -7,7 +7,7 @@ class HttpClient {
         return new HttpClient();
     }
 
-    async get(url: string): Promise<unknown> {
+    async get<T>(url: string): Promise<T> {
         return new Promise(async (resolve, reject) => {
             try {
                 const value = await import(`/api/mocks/${url}`);

@@ -21,7 +21,7 @@ export type TNameGroups = {
 }[];
 
 export const getNames = async (): Promise<TNameGroups> => {
-    const response = (await HttpClient.get('names')) as Partial<TNamesMockStructure>;
+    const response = await HttpClient.get<Partial<TNamesMockStructure>>('names');
     const responseKeys = Object.keys(response);
 
     return responseKeys.map(key => {
